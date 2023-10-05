@@ -5,6 +5,8 @@ const path = require('path');
 const fs = require('fs');
 const cors = require('cors');
 
+const port = 8889 || process.env.PORT
+
 app.use(express.static('uploads'));
 app.use(cors());
 
@@ -75,6 +77,6 @@ app.delete('/delete/:imageUrl', (req, res) => {
 });
 
 
-app.listen(8889, () => {
+app.listen(port, () => {
     console.log('CDN server running at 8889');
 });
