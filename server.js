@@ -42,7 +42,8 @@ app.post('/upload', upload.array('images'), (req, res) => {
 
     } catch (error) {
 
-        console.log(error);
+        console.error(error.message);
+        res.status(500).json({ error: "Internal Server Error" })
 
     }
 
@@ -50,19 +51,27 @@ app.post('/upload', upload.array('images'), (req, res) => {
 
 
 app.delete('/delete/:imageUrl', (req, res) => {
-    const imageUrlToDelete = req.params.imageUrl;
 
-    // Implement the logic to delete the image here
-    // You can use the `fs` module to remove the file from the "uploads" folder
+    try {
 
-    // Check if the image exists and delete it
-    const imagePath = path.join(__dirname, 'uploads', imageUrlToDelete);
-    if (fs.existsSync(imagePath)) {
-        fs.unlinkSync(imagePath);
-        res.status(200).json({ success: true, message: 'Image deleted successfully' });
-    } else {
-        res.status(404).json({ success: false, message: 'Image not found' });
+        const imageUrlToDelete = req.params.imageUrl;
+
+        const imagePath = path.join(__dirname, 'uploads', imageUrlToDelete);
+
+        if (fs.existsSync(imagePath)) {
+            fs.unlinkSync(imagePath);
+            res.status(200).json({ success: true, message: 'Image deleted successfully' });
+        } else {
+            res.status(404).json({ success: false, message: 'Image not found' });
+        }
+
+    } catch (error) {
+
+        console.error(error.message);
+        res.status(500).json({ error: "Internal Server Error" })
+
     }
+
 });
 
 
