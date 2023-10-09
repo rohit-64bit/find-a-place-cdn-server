@@ -78,5 +78,5 @@ app.delete('/delete/:imageUrl', (req, res) => {
 
 
 app.listen(port, () => {
-    console.log('CDN server running at 8889');
+    console.log(`CDN server running at ${port}`);
 });
